@@ -2,22 +2,23 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.javaex.dao.GuestbookDao;
+import com.javaex.service.GuestbookService;
 import com.javaex.vo.GuestbookVo;
 
 @Controller
 public class GuestbookController {
 	
 	//필드
-	
+	@Autowired
+	private GuestbookService guestbookService; // = new GuestbookDao(); (잦은 사용으로 공통으로 빼기)
 	
 	//생성자
 	
@@ -33,13 +34,13 @@ public class GuestbookController {
 		System.out.println("GuestbookController>addList()");
 		
 		//dao를 통해서 리스트를 가져오기
-		GuestbookDao guestbookDao = new GuestbookDao();
-		List<GuestbookVo> guestList = guestbookDao.getList();
+		//GuestbookDao guestbookDao = new GuestbookDao();
+		List<GuestbookVo> guestList = guestbookService.getList();
 		
 		//ds 데이터 보내기 --> request attribute에 넣는다
 		model.addAttribute("guestList", guestList);
 
-		return "/WEB-INF/views/addList.jsp";
+		return "addList";
 		
 	}
 	
@@ -51,8 +52,8 @@ public class GuestbookController {
 		
 		System.out.println(guestbookVo);
 		
-		GuestbookDao guestbookDao = new GuestbookDao();
-		int count = guestbookDao.guestInsert(guestbookVo);
+		//GuestbookDao guestbookDao = new GuestbookDao();
+		int count = guestbookService.guestInsert(guestbookVo);
 		System.out.println(count);
 
 		return "redirect:/addList";
@@ -67,7 +68,7 @@ public class GuestbookController {
 		
 		model.addAttribute("no", no);
 		
-		return "/WEB-INF/views/deleteForm.jsp";
+		return "deleteForm";
 		
 	}
 	
@@ -77,10 +78,10 @@ public class GuestbookController {
 		
 		System.out.println("GuestbookController>delete()");
 		
-		GuestbookDao guestbookDao = new GuestbookDao();
+		//GuestbookDao guestbookDao = new GuestbookDao();
 		int no = guestbookVo.getNo();
 		String password = guestbookVo.getPassword();
-		int count = guestbookDao.guestDelete(no, password);
+		int count = guestbookService.guestDelete(no, password);
 		
 		System.out.println(count);
 		
