@@ -42,10 +42,10 @@
 	<c:forEach items="${requestScope.guestList}" var="guestbookVo">
 		<table border="1">
 		<colgroup>
-			<col style="width: 50px;">
+			<col style="width: 60px;">
 			<col style="width: 120px;">
 			<col style="width: 250px;">
-			<col style="width: 65px;">
+			<col style="width: 60px;">
 		</colgroup>
 			<tr>
 				<td>[ ${guestbookVo.no}번 ]</td>

@@ -15,6 +15,7 @@
 	<p>삭제를 원하시면 비밀번호를 입력해 주세요.</p>
 
 	<form action="/guestbook3/delete/${guestbookVo.no}" method="get">
+		<input type="hidden" name="no" value="${no}">
 		비밀번호  <input type="password" name="password" value="">
 		<button type="submit">확인</button>
 		<br><br>

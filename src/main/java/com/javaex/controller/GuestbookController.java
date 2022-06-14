@@ -65,23 +65,23 @@ public class GuestbookController {
 		
 		System.out.println("GuestbookController>deleteForm()");
 		
-		GuestbookDao guestbookDao = new GuestbookDao();
-		GuestbookVo guestbookVo = guestbookDao.oneGuest(no);
-		
-		model.addAttribute("guestbookVo", guestbookVo);
+		model.addAttribute("no", no);
 		
 		return "/WEB-INF/views/deleteForm.jsp";
 		
 	}
 	
 	//방명록 삭제
-	@RequestMapping(value="/delete/{no}", method={RequestMethod.GET, RequestMethod.POST})
-	public String delete(@PathVariable("no") int no, @RequestParam("password") String password) {
+	@RequestMapping(value="/delete", method={RequestMethod.GET, RequestMethod.POST})
+	public String delete(@ModelAttribute GuestbookVo guestbookVo) {
 		
 		System.out.println("GuestbookController>delete()");
 		
 		GuestbookDao guestbookDao = new GuestbookDao();
+		int no = guestbookVo.getNo();
+		String password = guestbookVo.getPassword();
 		int count = guestbookDao.guestDelete(no, password);
+		
 		System.out.println(count);
 		
 		return "redirect:/addList";
